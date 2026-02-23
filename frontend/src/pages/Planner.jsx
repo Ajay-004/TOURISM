@@ -86,7 +86,7 @@ const Planner = () => {
     setLoading(true);
     setItinerary(null);
     try {
-      const response = await fetch('http://localhost:5000/api/generate-itinerary', {
+      const response = await fetch('https://tourism-o7fr.onrender.com/api/generate-itinerary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, lang }),
@@ -245,5 +245,6 @@ const Planner = () => {
     </div>
   );
 };
+
 
 export default Planner;
