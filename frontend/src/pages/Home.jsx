@@ -216,12 +216,7 @@ const Home = () => {
                     <Typewriter key={activeIndex} text={content.features[activeIndex].desc} />
                   </p>
                 </div>
-                <motion.button onClick={() => navigate(paths[activeIndex])} whileHover={{ x: 10 }} className="group flex items-center gap-4 text-white font-black uppercase tracking-[0.3em] text-xs md:text-sm">
-                  <span className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-                    <ChevronRight size={20} />
-                  </span>
-                  {content.btn}
-                </motion.button>
+                
               </motion.div>
             </AnimatePresence>
           </div>
@@ -230,5 +225,6 @@ const Home = () => {
     </div>
   );
 };
+
 
 export default Home;
