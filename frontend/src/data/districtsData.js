@@ -59,7 +59,7 @@ export const districtsData = {
     { 
       name: { en: "Arapaleeswarar Temple", ta: "அறப்பளீஸ்வரர் கோவில்" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.6, img: "public/districts/namakkal/arapaleeswarar.jpg",
+      rating: 4.6, img: "/districts/namakkal/arapaleeswarar.jpg",
       details: { 
         open: { en: "6:00 AM - 8:00 PM", ta: "காலை 6:00 - இரவு 8:00" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -142,5 +142,6 @@ export const districtsData = {
     }
   ]
 };
+
 
 
