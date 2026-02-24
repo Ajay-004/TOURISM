@@ -3,7 +3,7 @@ export const districtsData = {
     { 
       name: { en: "Namakkal Anjaneyar Temple", ta: "நாமக்கல் ஆஞ்சநேயர் கோவில்" },
       city: { en: "Namakkal Town", ta: "நாமக்கல் நகரம்" },
-      rating: 4.9, img: "src/assets/districts/namakkal/anjaneyar.jpg",
+      rating: 4.9, img: "public/districts/namakkal/anjaneyar.jpg",
       details: { 
         open: { en: "6:30 AM - 1:00 PM, 4:30 PM - 9:00 PM", ta: "காலை 6:30 - மதியம் 1:00, மாலை 4:30 - இரவு 9:00" },
         cost: { en: "Free Entry", ta: "இலவச அனுமதி" },
@@ -17,7 +17,7 @@ export const districtsData = {
     { 
       name: { en: "Namakkal Fort", ta: "நாமக்கல் கோட்டை" },
       city: { en: "Namakkal Town", ta: "நாமக்கல் நகரம்" },
-      rating: 4.7, img: "src/assets/districts/namakkal/fort.jpg",
+      rating: 4.7, img: "public/districts/namakkal/fort.jpg",
       details: { 
         open: { en: "9:30 AM - 5:45 PM", ta: "காலை 9:30 - மாலை 5:45" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -31,7 +31,7 @@ export const districtsData = {
     { 
       name: { en: "Ardhanareeswarar Temple", ta: "அர்த்தநாரீஸ்வரர் கோவில்" },
       city: { en: "Tiruchengode", ta: "திருச்செங்கோடு" },
-      rating: 4.8, img: "src/assets/districts/namakkal/tiruchengode.jpg",
+      rating: 4.8, img: "public/districts/namakkal/tiruchengode.jpg",
       details: { 
         open: { en: "6:00 AM - 9:00 PM", ta: "காலை 6:00 - இரவு 9:00" },
         cost: { en: "Free Entry", ta: "இலவச அனுமதி" },
@@ -45,7 +45,7 @@ export const districtsData = {
     { 
       name: { en: "Agaya Gangai Waterfalls", ta: "ஆகாய கங்கை நீர்வீழ்ச்சி" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.8, img: "src/assets/districts/namakkal/agaya_gangai.jpg",
+      rating: 4.8, img: "public/districts/namakkal/agaya_gangai.jpg",
       details: { 
         open: { en: "6:00 AM - 3:00 PM", ta: "காலை 6:00 - மதியம் 3:00" },
         cost: { en: "₹10 Entry", ta: "₹10 நுழைவுக்கட்டணம்" },
@@ -59,7 +59,7 @@ export const districtsData = {
     { 
       name: { en: "Arapaleeswarar Temple", ta: "அறப்பளீஸ்வரர் கோவில்" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.6, img: "src/assets/districts/namakkal/arapaleeswarar.jpg",
+      rating: 4.6, img: "public/districts/namakkal/arapaleeswarar.jpg",
       details: { 
         open: { en: "6:00 AM - 8:00 PM", ta: "காலை 6:00 - இரவு 8:00" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -73,7 +73,7 @@ export const districtsData = {
     { 
       name: { en: "Narasimha Swamy Temple", ta: "நரசிம்ம சுவாமி கோவில்" },
       city: { en: "Namakkal Town", ta: "நாமக்கல் நகரம்" },
-      rating: 4.7, img: "src/assets/districts/namakkal/narasimha.jpg",
+      rating: 4.7, img: "public/districts/namakkal/narasimha.jpg",
       details: { 
         open: { en: "6:30 AM - 1:00 PM, 4:30 PM - 9:00 PM", ta: "காலை 6:30 - மதியம் 1:00, மாலை 4:30 - இரவு 9:00" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -87,7 +87,7 @@ export const districtsData = {
     { 
       name: { en: "Botanical Garden", ta: "தாவரவியல் பூங்கா" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.4, img: "src/assets/districts/namakkal/botanical.jpg",
+      rating: 4.4, img: "public/districts/namakkal/botanical.jpg",
       details: { 
         open: { en: "8:00 AM - 8:00 PM", ta: "காலை 8:00 - இரவு 8:00" },
         cost: { en: "₹20 (Adults), ₹10 (Kids)", ta: "₹20 (பெரியவர்), ₹10 (சிறியவர்)" },
@@ -101,7 +101,7 @@ export const districtsData = {
     { 
       name: { en: "Ettukai Amman Temple", ta: "எட்டுக்கை அம்மன் கோவில்" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.6, img: "src/assets/districts/namakkal/ettukai.jpg",
+      rating: 4.6, img: "public/districts/namakkal/ettukai.jpg",
       details: { 
         open: { en: "7:00 AM - 7:00 PM", ta: "காலை 7:00 - இரவு 7:00" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -115,7 +115,7 @@ export const districtsData = {
     { 
       name: { en: "Selur View Point", ta: "செல்லூர் காட்சி முனை" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.5, img: "src/assets/districts/namakkal/selur.jpg",
+      rating: 4.5, img: "public/districts/namakkal/selur.jpg",
       details: { 
         open: { en: "Sunrise - Sunset", ta: "சூரிய உதயம் - மறைவு" },
         cost: { en: "Free", ta: "இலவசம்" },
@@ -129,7 +129,7 @@ export const districtsData = {
     { 
       name: { en: "Maasila Falls", ta: "மாசிலா அருவி" },
       city: { en: "Kolli Hills", ta: "கொல்லி மலை" },
-      rating: 4.4, img: "src/assets/districts/namakkal/maasila.jpg",
+      rating: 4.4, img: "public/districts/namakkal/maasila.jpg",
       details: { 
         open: { en: "7:00 AM - 5:00 PM", ta: "காலை 7:00 - மாலை 5:00" },
         cost: { en: "₹10", ta: "₹10" },
@@ -141,6 +141,4 @@ export const districtsData = {
       }
     }
   ]
-
 };
-
