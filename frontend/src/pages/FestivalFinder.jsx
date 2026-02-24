@@ -92,13 +92,13 @@ const FestivalFinder = () => {
 
   const content = {
     en: { 
-      header: "Heritage Events", sub: "Explore spiritual & cultural gatherings", btn: "Find Events", 
+      header: "Festival Finder", sub: "Explore spiritual & cultural gatherings", btn: "Find Events", 
       id: "Account", nav: ["Home", "Trip Planner", "Place Finder"], menu: "Navigation",
       logout: "Sign Out", timing: "Timing", entry: "Entry", protocol: "Attire", gears: "Essentials",
       userLabel: "Username", emailLabel: "Email"
     },
     ta: { 
-      header: "திருவிழாக்கள்", sub: "ஆன்மீகம் மற்றும் பண்பாட்டு நிகழ்வுகள்", btn: "கண்டறியவும்", 
+      header: "திருவிழா தேடல்", sub: "ஆன்மீகம் மற்றும் பண்பாட்டு நிகழ்வுகள்", btn: "கண்டறியவும்", 
       id: "அடையாளம்", nav: ["முகப்பு", "திட்டம்", "இடங்கள்"], menu: "வழிசெலுத்தல்",
       logout: "வெளியேறு", timing: "நேரம்", entry: "கட்டணம்", protocol: "வருகை உடை", gears: "தேவையானவை",
       userLabel: "பயனர் பெயர்", emailLabel: "மின்னஞ்சல்"
@@ -261,5 +261,6 @@ const FestivalFinder = () => {
     </div>
   );
 };
+
 
 export default FestivalFinder;
