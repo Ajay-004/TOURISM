@@ -3,7 +3,7 @@ export const districtsData = {
     { 
       name: { en: "Namakkal Anjaneyar Temple", ta: "நாமக்கல் ஆஞ்சநேயர் கோவில்" },
       city: { en: "Namakkal Town", ta: "நாமக்கல் நகரம்" },
-      rating: 4.9, img: "public/districts/namakkal/anjaneyar.jpg",
+      rating: 4.9, img: "/districts/namakkal/anjaneyar.jpg",
       details: { 
         open: { en: "6:30 AM - 1:00 PM, 4:30 PM - 9:00 PM", ta: "காலை 6:30 - மதியம் 1:00, மாலை 4:30 - இரவு 9:00" },
         cost: { en: "Free Entry", ta: "இலவச அனுமதி" },
@@ -142,3 +142,4 @@ export const districtsData = {
     }
   ]
 };
+
