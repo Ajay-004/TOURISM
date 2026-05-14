@@ -9,7 +9,6 @@ import { auth } from '../firebaseConfig';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 // --- IMPORT EXTERNAL MASTER DATA ---
-// Make sure you create this file in your data folder
 import { districtsData } from '../data/districtsData';
 
 const Finder = () => {
@@ -36,18 +35,26 @@ const Finder = () => {
     return () => unsubscribe();
   }, []);
 
-  // --- METHOD 2 DYNAMIC LOOKUP LOGIC ---
-  const filteredPlaces = districtsData[searchQuery.toLowerCase().trim().replace(/\s/g, "")] || [];
+  // --- NAVIGATION HANDLER ---
+  const handleNavigation = (path) => {
+    setIsMenuOpen(false); // Close menu first
+    setTimeout(() => {
+      navigate(path); // Navigate after a tiny delay to allow animation to start
+    }, 100);
+  };
+
+  const lookupKey = searchQuery.toLowerCase().trim().replace(/\s/g, "");
+  const filteredPlaces = districtsData[lookupKey] || [];
 
   const content = {
     en: { 
       brand: "TN Flow", nav: ["Home", "Trip Planner", "Festival Finder"], 
-      header: "Tourist Place Discovery", sub: "Enter a district to reveal local gems",
+      header: "Heritage Discovery", sub: "Enter a district to reveal local gems",
       searchPlaceholder: "Search district...", id: "Identity", back: "Back to Search" 
     },
     ta: { 
       brand: "டிஎன் ஃபுளோ", nav: ["முகப்பு", "திட்டம்", "திருவிழாக்கள்"], 
-      header: "சுற்றுலாத் தலம் தேடல்", sub: "மாவட்டத்தின் பெயரை உள்ளிடவும்",
+      header: "பாரம்பரிய தேடல்", sub: "மாவட்டத்தின் பெயரை உள்ளிடவும்",
       searchPlaceholder: "மாவட்டம்...", id: "அடையாளம்", back: "திரும்பிச் செல்" 
     }
   }[lang];
@@ -58,84 +65,78 @@ const Finder = () => {
   return (
     <div className="min-h-screen text-white font-sans overflow-x-hidden" style={{ background: 'linear-gradient(135deg, #8b5cf6 50%, #38bdf8 100%)' }}>
       
-     
-        {/* 1. NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full h-20 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/10 flex justify-center">
-        <div className="w-full max-w-7xl px-4 md:px-8 flex justify-between items-center">
+      {/* 1. NAVIGATION BAR */}
+      <nav className="fixed w-full h-16 sm:h-20 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/10 flex justify-center px-4 sm:px-6">
+        <div className="w-full max-w-7xl flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <button onClick={() => setIsMenuOpen(true)} className="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer text-white lg:hidden">
-              <Menu size={24} />
+            <button onClick={() => setIsMenuOpen(true)} className="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors">
+              <Menu size={24}/>
             </button>
-            <span className="text-lg md:text-xl font-black italic tracking-widest uppercase cursor-pointer" onClick={() => navigate("/home")}>
+            <span className="text-base sm:text-xl font-black italic tracking-widest uppercase cursor-pointer" onClick={() => navigate("/home")}>
               {content.brand}
             </span>
           </div>
 
           <div className="hidden lg:flex items-center gap-10">
-            {content.nav.map((item, i) => (
-              <Link key={i} to={paths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-white transition-all">{item}</Link>
+            {content.nav.map((label, i) => (
+              <Link key={i} to={navPaths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-white transition-all">
+                {label}
+              </Link>
             ))}
           </div>
 
           <div className="flex items-center gap-4">
-            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="text-white/60 hover:text-white transition-all cursor-pointer">
-              <Globe size={18}/> <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:inline">{lang === 'en' ? "தமிழ்" : "English"}</span>
-            </button>
-            <button onClick={() => setIsProfileOpen(true)} className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer shadow-xl">
-              <User size={16} className="text-white" />
-            </button>
+            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="p-2 text-white/60 hover:text-white transition-colors cursor-pointer"><Globe size={18}/></button>
+            <button onClick={() => setIsProfileOpen(true)} className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer"><User size={16}/></button>
           </div>
         </div>
       </nav>
 
-      {/* 2. MOBILE MENU */}
+      {/* 2. SIDEBARS (Mobile Menu & Profile) */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMenuOpen(false)} className="fixed inset-0 bg-blue-900/60 z-[100] backdrop-blur-xl" />
-            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} className="fixed left-0 top-0 h-full w-full max-w-xs bg-indigo-950/80 backdrop-blur-3xl border-r border-white/10 z-[110] p-10 flex flex-col shadow-2xl">
-              <div className="flex justify-between items-center mb-16 text-blue-300 italic font-black uppercase tracking-widest text-xl">
-                {content.menu}
-                <X size={24} className="cursor-pointer text-white/40 hover:text-white" onClick={() => setIsMenuOpen(false)} />
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+              onClick={() => setIsMenuOpen(false)} 
+              className="fixed inset-0 bg-black/60 z-[100] backdrop-blur-md" 
+            />
+            <motion.div 
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} 
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed left-0 top-0 h-full w-full max-w-[280px] bg-indigo-950/95 backdrop-blur-3xl border-r border-white/10 z-[110] p-8 flex flex-col shadow-2xl"
+            >
+              <div className="flex justify-between items-center mb-12">
+                <span className="text-xl font-black italic uppercase tracking-tighter">{content.brand}</span>
+                <X size={24} className="cursor-pointer text-white/40" onClick={() => setIsMenuOpen(false)} />
               </div>
-              <div className="space-y-10">
-                {content.nav.map((item, i) => (
-                  <Link key={i} to={paths[i]} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-5 text-lg font-bold uppercase tracking-tighter hover:text-blue-300 transition-colors group">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-400 transition-all">{navIcons[i]}</div>
-                    {item}
-                  </Link>
+              
+              <div className="flex flex-col gap-4">
+                {content.nav.map((label, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => handleNavigation(navPaths[i])}
+                    className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/10 transition-all text-sm font-bold uppercase tracking-widest text-white/70 hover:text-white text-left"
+                  >
+                    {navIcons[i]} {label}
+                  </button>
                 ))}
               </div>
             </motion.div>
           </>
         )}
-      </AnimatePresence>
 
-      {/* 3. UPDATED PROFILE SIDEBAR */}
-      <AnimatePresence>
+        {/* PROFILE SIDEBAR */}
         {isProfileOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsProfileOpen(false)} className="fixed inset-0 bg-black/40 z-[60] backdrop-blur-md" />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed right-0 top-0 h-full w-full max-w-sm bg-blue-900/20 backdrop-blur-3xl border-l border-white/10 z-[70] p-10 md:p-12 flex flex-col shadow-2xl">
-              <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
-                <h2 className="text-xl font-black uppercase tracking-[0.3em] text-white italic">{content.id}</h2>
-                <X size={24} className="cursor-pointer text-white/40 hover:text-white" onClick={() => setIsProfileOpen(false)} />
-              </div>
-
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsProfileOpen(false)} className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-md" />
+            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed right-0 top-0 h-full w-full max-w-sm bg-blue-900/20 backdrop-blur-3xl border-l border-white/10 z-[110] p-10 flex flex-col shadow-2xl">
+              <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-6"><h2 className="text-xl font-black uppercase italic">{content.id}</h2><X size={24} className="cursor-pointer text-white/40" onClick={() => setIsProfileOpen(false)} /></div>
               <div className="flex-1 space-y-6">
-                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg">
-                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2">{content.userLabel}</p>
-                    <p className="text-lg font-bold italic tracking-tight text-white">{userData.name}</p>
-                 </div>
-                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg">
-                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2">{content.emailLabel}</p>
-                    <p className="text-sm font-medium text-white/70 break-all">{userData.email}</p>
-                 </div>
+                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg"><p className="text-[10px] font-black text-white/40 uppercase mb-2">Username</p><p className="text-lg font-bold italic text-white break-words">{userData.name}</p></div>
+                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg"><p className="text-[10px] font-black text-white/40 uppercase mb-2">Email</p><p className="text-sm font-medium text-white/70 break-all">{userData.email}</p></div>
               </div>
-
-              <button onClick={handleLogout} className="w-full py-4 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-black uppercase tracking-widest text-[10px] hover:bg-red-500 hover:text-white transition-all mt-auto shadow-xl">
-                {content.logout}
-              </button>
+              <button onClick={() => signOut(auth).then(() => navigate("/"))} className="w-full py-4 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-black uppercase text-[10px] mt-auto hover:bg-red-500 hover:text-white transition-all">Sign Out</button>
             </motion.div>
           </>
         )}
@@ -158,7 +159,6 @@ const Finder = () => {
                 />
               </div>
 
-              {/* DYNAMIC CARD GRID */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 {filteredPlaces.map((place, i) => (
                   <motion.div key={i} whileHover={{ y: -8 }} onClick={() => setSelectedPlace(place)} className="bg-white/5 backdrop-blur-lg overflow-hidden border border-white/10 rounded-[2.5rem] shadow-xl cursor-pointer text-left flex flex-col h-full">
@@ -172,13 +172,12 @@ const Finder = () => {
               </div>
             </motion.div>
           ) : (
-            /* 4. DETAIL PANEL */
             <motion.div key="details" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-blue-950/40 backdrop-blur-3xl p-6 sm:p-14 rounded-[3.5rem] border border-white/10 shadow-2xl w-full max-w-6xl text-left">
               <button onClick={() => setSelectedPlace(null)} className="mb-10 text-[9px] sm:text-[10px] font-black uppercase flex items-center gap-2 text-white/40 hover:text-white transition-colors"><ArrowLeft size={16}/> {content.back}</button>
               <div className="flex flex-col lg:flex-row gap-8 sm:gap-12">
                 <div className="w-full lg:w-1/2 h-64 sm:h-[450px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl"><img src={selectedPlace.img} className="w-full h-full object-cover" alt={selectedPlace.name[lang]}/></div>
                 <div className="w-full lg:w-1/2 space-y-8">
-                  <h2 className="text-3xl sm:text-5xl font-black italic uppercase text-blue-50 leading-tight break-words leading-none">{selectedPlace.name[lang]}</h2>
+                  <h2 className="text-3xl sm:text-5xl font-black italic uppercase text-blue-50 leading-tight break-words">{selectedPlace.name[lang]}</h2>
                   <p className="text-blue-100/70 leading-relaxed font-light text-base sm:text-lg">{selectedPlace.details.desc[lang]}</p>
                   <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     <div className="p-4 sm:p-5 bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl"><div className="text-blue-300 text-[10px] font-black uppercase mb-1 flex items-center gap-2"><Clock size={16}/> TIMING</div><p className="text-xs font-bold">{selectedPlace.details.open[lang]}</p></div>
@@ -195,6 +194,5 @@ const Finder = () => {
     </div>
   );
 };
-
 
 export default Finder;
