@@ -102,28 +102,30 @@ const Planner = () => {
   return (
     <div className="min-h-screen text-white font-sans overflow-x-hidden" style={{ background: 'linear-gradient(135deg, #8b5cf6 50%, #38bdf8 100%)' }}>
       
-      {/* 1. NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full h-20 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/10 flex justify-center px-4">
-        <div className="w-full max-w-7xl flex justify-between items-center">
+        {/* 1. NAVBAR */}
+      <nav className="fixed top-0 left-0 w-full h-20 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/10 flex justify-center">
+        <div className="w-full max-w-7xl px-4 md:px-8 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <button onClick={() => setIsMenuOpen(true)} className="lg:hidden p-2 hover:bg-white/10 rounded-lg text-white">
+            <button onClick={() => setIsMenuOpen(true)} className="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer text-white lg:hidden">
               <Menu size={24} />
             </button>
-            <span className="text-xl font-black tracking-widest uppercase italic cursor-pointer" onClick={() => navigate("/home")}>{content.brand}</span>
+            <span className="text-lg md:text-xl font-black italic tracking-widest uppercase cursor-pointer" onClick={() => navigate("/home")}>
+              {content.brand}
+            </span>
           </div>
 
           <div className="hidden lg:flex items-center gap-10">
             {content.nav.map((item, i) => (
-              <Link key={i} to={paths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 hover:text-cyan-400 transition-all">{item}</Link>
+              <Link key={i} to={paths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-white transition-all">{item}</Link>
             ))}
           </div>
 
           <div className="flex items-center gap-4">
-            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="flex items-center gap-2 text-white/60 hover:text-cyan-400 transition-all cursor-pointer">
+            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="text-white/60 hover:text-white transition-all cursor-pointer">
               <Globe size={18}/> <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:inline">{lang === 'en' ? "தமிழ்" : "English"}</span>
             </button>
-            <button onClick={() => setIsProfileOpen(true)} className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-cyan-400 shadow-xl transition-all">
-              <User size={16} />
+            <button onClick={() => setIsProfileOpen(true)} className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer shadow-xl">
+              <User size={16} className="text-white" />
             </button>
           </div>
         </div>
