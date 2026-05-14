@@ -49,12 +49,12 @@ const Finder = () => {
   const content = {
     en: { 
       brand: "TN Flow", nav: ["Home", "Trip Planner", "Festival Finder"], 
-      header: "Heritage Discovery", sub: "Enter a district to reveal local gems",
+      header: "Tourist Place Discovery", sub: "Enter a district to reveal local gems",
       searchPlaceholder: "Search district...", id: "Identity", back: "Back to Search" 
     },
     ta: { 
       brand: "டிஎன் ஃபுளோ", nav: ["முகப்பு", "திட்டம்", "திருவிழாக்கள்"], 
-      header: "பாரம்பரிய தேடல்", sub: "மாவட்டத்தின் பெயரை உள்ளிடவும்",
+      header: "சுற்றுலாத் தலத்தைக் கண்டறிதல்", sub: "மாவட்டத்தின் பெயரை உள்ளிடவும்",
       searchPlaceholder: "மாவட்டம்...", id: "அடையாளம்", back: "திரும்பிச் செல்" 
     }
   }[lang];
