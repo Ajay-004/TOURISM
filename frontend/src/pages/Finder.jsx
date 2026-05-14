@@ -58,37 +58,84 @@ const Finder = () => {
   return (
     <div className="min-h-screen text-white font-sans overflow-x-hidden" style={{ background: 'linear-gradient(135deg, #8b5cf6 50%, #38bdf8 100%)' }}>
       
-      {/* 1. NAVIGATION BAR */}
-      <nav className="fixed w-full h-16 sm:h-20 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/10 flex justify-center px-4 sm:px-6">
-        <div className="w-full max-w-7xl flex justify-between items-center">
+     
+        {/* 1. NAVBAR */}
+      <nav className="fixed top-0 left-0 w-full h-20 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/10 flex justify-center">
+        <div className="w-full max-w-7xl px-4 md:px-8 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <button onClick={() => setIsMenuOpen(true)} className="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg"><Menu size={24}/></button>
-            <span className="text-base sm:text-xl font-black italic tracking-widest uppercase cursor-pointer" onClick={() => navigate("/home")}>{content.brand}</span>
+            <button onClick={() => setIsMenuOpen(true)} className="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer text-white lg:hidden">
+              <Menu size={24} />
+            </button>
+            <span className="text-lg md:text-xl font-black italic tracking-widest uppercase cursor-pointer" onClick={() => navigate("/home")}>
+              {content.brand}
+            </span>
           </div>
+
           <div className="hidden lg:flex items-center gap-10">
-            {content.nav.map((label, i) => (
-              <Link key={i} to={navPaths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-white transition-all">{label}</Link>
+            {content.nav.map((item, i) => (
+              <Link key={i} to={paths[i]} className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-white transition-all">{item}</Link>
             ))}
           </div>
+
           <div className="flex items-center gap-4">
-            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="p-2 text-white/60 hover:text-white transition-colors cursor-pointer"><Globe size={18}/></button>
-            <button onClick={() => setIsProfileOpen(true)} className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer"><User size={16}/></button>
+            <button onClick={() => setLang(lang === 'en' ? 'ta' : 'en')} className="text-white/60 hover:text-white transition-all cursor-pointer">
+              <Globe size={18}/> <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:inline">{lang === 'en' ? "தமிழ்" : "English"}</span>
+            </button>
+            <button onClick={() => setIsProfileOpen(true)} className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer shadow-xl">
+              <User size={16} className="text-white" />
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* 2. SIDEBARS (Mobile Menu & Profile) */}
+      {/* 2. MOBILE MENU */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMenuOpen(false)} className="fixed inset-0 bg-blue-900/60 z-[100] backdrop-blur-xl" />
+            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} className="fixed left-0 top-0 h-full w-full max-w-xs bg-indigo-950/80 backdrop-blur-3xl border-r border-white/10 z-[110] p-10 flex flex-col shadow-2xl">
+              <div className="flex justify-between items-center mb-16 text-blue-300 italic font-black uppercase tracking-widest text-xl">
+                {content.menu}
+                <X size={24} className="cursor-pointer text-white/40 hover:text-white" onClick={() => setIsMenuOpen(false)} />
+              </div>
+              <div className="space-y-10">
+                {content.nav.map((item, i) => (
+                  <Link key={i} to={paths[i]} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-5 text-lg font-bold uppercase tracking-tighter hover:text-blue-300 transition-colors group">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-400 transition-all">{navIcons[i]}</div>
+                    {item}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* 3. UPDATED PROFILE SIDEBAR */}
       <AnimatePresence>
         {isProfileOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsProfileOpen(false)} className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-md" />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed right-0 top-0 h-full w-full max-w-sm bg-blue-900/20 backdrop-blur-3xl border-l border-white/10 z-[110] p-10 flex flex-col shadow-2xl">
-              <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-6"><h2 className="text-xl font-black uppercase italic">{content.id}</h2><X size={24} className="cursor-pointer text-white/40" onClick={() => setIsProfileOpen(false)} /></div>
-              <div className="flex-1 space-y-6">
-                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg"><p className="text-[10px] font-black text-white/40 uppercase mb-2">Username</p><p className="text-lg font-bold italic text-white break-words">{userData.name}</p></div>
-                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg"><p className="text-[10px] font-black text-white/40 uppercase mb-2">Email</p><p className="text-sm font-medium text-white/70 break-all">{userData.email}</p></div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsProfileOpen(false)} className="fixed inset-0 bg-black/40 z-[60] backdrop-blur-md" />
+            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed right-0 top-0 h-full w-full max-w-sm bg-blue-900/20 backdrop-blur-3xl border-l border-white/10 z-[70] p-10 md:p-12 flex flex-col shadow-2xl">
+              <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
+                <h2 className="text-xl font-black uppercase tracking-[0.3em] text-white italic">{content.id}</h2>
+                <X size={24} className="cursor-pointer text-white/40 hover:text-white" onClick={() => setIsProfileOpen(false)} />
               </div>
-              <button onClick={() => signOut(auth).then(() => navigate("/"))} className="w-full py-4 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-black uppercase text-[10px] mt-auto hover:bg-red-500 hover:text-white transition-all">Sign Out</button>
+
+              <div className="flex-1 space-y-6">
+                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg">
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2">{content.userLabel}</p>
+                    <p className="text-lg font-bold italic tracking-tight text-white">{userData.name}</p>
+                 </div>
+                 <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-lg">
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2">{content.emailLabel}</p>
+                    <p className="text-sm font-medium text-white/70 break-all">{userData.email}</p>
+                 </div>
+              </div>
+
+              <button onClick={handleLogout} className="w-full py-4 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-black uppercase tracking-widest text-[10px] hover:bg-red-500 hover:text-white transition-all mt-auto shadow-xl">
+                {content.logout}
+              </button>
             </motion.div>
           </>
         )}
